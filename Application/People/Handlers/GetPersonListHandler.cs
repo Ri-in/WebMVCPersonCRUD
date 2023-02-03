@@ -16,7 +16,7 @@ namespace Application.People.Handlers
 
         public async Task<List<Person>> Handle(GetPersonListQuery request, CancellationToken cancellationToken)
         {
-            return _personRepository.ReadAll().Result.ToList();
+            return await Task.FromResult(_personRepository.ReadAll().Result.ToList());
         }
     }
 }

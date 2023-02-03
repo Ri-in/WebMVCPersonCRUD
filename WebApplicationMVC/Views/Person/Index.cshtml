@@ -1,0 +1,16 @@
+﻿@model List<Domain.Person>
+
+@{
+    ViewData["Title"] = "People";
+}
+
+<ul>
+    @foreach (var person in Model)
+    {
+        <li>First name: @person.FirstName</li>
+        <li>Last name: @person.LastName</li>
+        <li>Age: @person.Age</li>
+    }
+</ul>
+
+

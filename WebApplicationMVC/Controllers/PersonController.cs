@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.People.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationMVC.Controllers
@@ -14,9 +15,11 @@ namespace WebApplicationMVC.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Index(GetPersonListQuery query, CancellationToken cancellationToken)
         {
-            return View();
+            var people = _mediator.Send(query, cancellationToken).Result.ToList();
+
+            return View(people);
         }
 
         public IActionResult Add()

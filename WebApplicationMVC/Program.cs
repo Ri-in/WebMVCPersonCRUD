@@ -1,18 +1,18 @@
 using Application.Interfaces;
+using Application.People.Queries;
 using Infrastructure.Persistance;
 using Infrastructure.Persistance.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultCnnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddMediatR(typeof(GetPersonListQuery).Assembly);
 
 builder.Services.AddControllersWithViews();
 
