@@ -1,0 +1,36 @@
+﻿@model Domain.Person
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div>
+    <button>
+        <a asp-action="Index">To list</a>
+    </button>
+</div>
+
+<h2>Id: @Model.Id</h2>
+
+<div>
+    <form method="post">
+        <div>
+            <input type="hidden" value="@Model.Id" name="Id" />
+        </div>
+        <div>
+            <p>First name:</p>
+            <p>@Model.FirstName</p>
+        </div>
+        <div>
+            <p>Last name:</p>
+            <p>@Model.LastName</p>
+        </div>
+        <div>
+            <p>Age:</p>
+            <p>@Model.Age</p>
+        </div>
+        <div>
+            <input type="submit" value="Delete" asp-action="DeletePost" />
+        </div>
+    </form>
+</div>

@@ -5,7 +5,8 @@ using MediatR;
 
 namespace Application.People.Handlers
 {
-    public class GetPersonListHandler : IRequestHandler<GetPersonListQuery, List<Person>>
+    public class GetPersonListHandler
+        : IRequestHandler<GetPersonListQuery, List<Person>>
     {
         private readonly IPersonRepository _personRepository;
 

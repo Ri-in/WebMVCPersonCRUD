@@ -3,6 +3,6 @@ using MediatR;
 
 namespace Application.People.Queries
 {
-    public record GetPersonListQuery()
-        : IRequest<List<Person>>;
+    public record GetPersonByIdQuery(int Id)
+        : IRequest<Person>;
 }

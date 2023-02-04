@@ -39,9 +39,9 @@ namespace Infrastructure.Persistance.Repositories
             _context.Remove(person);
         }
 
-        public async void Save()
+        public void Save()
         {
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 }

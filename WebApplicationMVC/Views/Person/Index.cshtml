@@ -3,6 +3,15 @@
 @{
     ViewData["Title"] = "People";
 }
+<div>
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>
+<br />
+<div>
+    <button asp-action="Add">
+        <a asp-action="Add">Add person</a>
+    </button>
+</div>
 
 <ul>
     @foreach (var person in Model)
@@ -10,6 +19,13 @@
         <li>First name: @person.FirstName</li>
         <li>Last name: @person.LastName</li>
         <li>Age: @person.Age</li>
+        <button>
+            @Html.ActionLink("Edit", "Update", new { id = person.Id })
+        </button>
+        <button>
+            @Html.ActionLink("Delete", "Delete", new { id = person.Id })
+        </button>
+        <br />
     }
 </ul>
 

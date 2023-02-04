@@ -1,0 +1,35 @@
+﻿@model Int32
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<div>
+    <form method="post">
+        <div>
+            <p>First name:</p>
+            <input name="FirstName" />
+        </div>
+        <div>
+            <p>Last name:</p>
+            <input name="LastName" />
+        </div>
+        <div>
+            <p>Age:</p>
+            <input type="number" name="Age" />
+        </div>
+        <div>
+            <input type="submit" value="Send" />
+            <button asp-action="Index">
+                To list
+            </button>
+        </div>
+    </form>
+</div>
+
+<div>
+    @if (Model != 0)
+    {
+        <p>A new person has been added; Id: @Model</p>
+    }
+</div>

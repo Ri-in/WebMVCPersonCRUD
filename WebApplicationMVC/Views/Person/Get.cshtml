@@ -1,0 +1,22 @@
+﻿@model Domain.Person;
+
+@{
+    ViewData["Title"] = "Get";
+}
+
+<div>
+    <button>
+        <a asp-action="Add">Add person</a>
+    </button>
+    <button>
+        <a asp-action="Get">To List</a>
+    </button>
+</div>
+
+<div>
+    <h2>Id: @Model.Id</h2>
+    <br />
+    <p>First name: @Model.FirstName</p>
+    <p>Last name: @Model.LastName</p>
+    <p>Age: @Model.Age</p>
+</div>

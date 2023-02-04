@@ -1,0 +1,36 @@
+﻿@model Domain.Person;
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div>
+    <button>
+        <a asp-action="Index">To list</a>
+    </button>
+</div>
+
+<div>
+    <h2>Id: @Model.Id</h2>
+
+    <form method="post">
+        <div>
+            <input type="hidden" value="@Model.Id" name="Id" />
+        </div>
+        <div>
+            <p>First name:</p>
+            <input value="@Model.FirstName" name="FirstName" />
+        </div>
+        <div>
+            <p>Last name:</p>
+            <input value="@Model.LastName" name="LastName" />
+        </div>
+        <div>
+            <p>Age:</p>
+            <input type="number" value="@Model.Age" name="Age" />
+        </div>
+        <div>
+            <input type="submit" value="Save" />
+        </div>
+    </form>
+</div>
