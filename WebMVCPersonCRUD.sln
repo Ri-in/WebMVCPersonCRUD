@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{E4B6DC13-835D-4F2D-BFAE-CA01A787B9DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{E4B6DC13-835D-4F2D-BFAE-CA01A787B9DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{938689A6-9C8F-4D42-8A10-CA549210B213}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{938689A6-9C8F-4D42-8A10-CA549210B213}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{01E357DE-4A8C-46C7-803E-8F7B15FB97C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{01E357DE-4A8C-46C7-803E-8F7B15FB97C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentations", "Presentations", "{14F25AF5-3955-4F16-9576-9D167150DBB1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{9C9598C7-A32A-498C-827B-E4E12039270C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationMVC", "WebApplicationMVC\WebApplicationMVC.csproj", "{8F441424-CFFE-4EF3-8BCA-CCF6071A107E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationMVC", "WebApplicationMVC\WebApplicationMVC.csproj", "{8F441424-CFFE-4EF3-8BCA-CCF6071A107E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

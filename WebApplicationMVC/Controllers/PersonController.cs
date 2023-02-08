@@ -1,10 +1,11 @@
-﻿using Application.People.Commands;
+﻿using Application.People.Commands.Create;
+using Application.People.Commands.Delete;
+using Application.People.Commands.Update;
 using Application.People.Queries;
-using Azure.Core;
 using Domain;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading;
 
 namespace WebApplicationMVC.Controllers
 {
@@ -27,9 +28,9 @@ namespace WebApplicationMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
         {
-            return View(GetPersonById(id, cancellationToken));
+            return View(await _mediator.Send(new GetPersonByIdQuery(id), cancellationToken));
         }
 
         [HttpGet]
@@ -39,45 +40,66 @@ namespace WebApplicationMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromForm] Person person, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddAsync(CreatePersonCommand createPersonCommand, CancellationToken cancellationToken)
         {
-            int id = _mediator.Send(new CreatePersonCommand(person.FirstName, person.LastName, person.Age), cancellationToken).Result;
+            try
+            {
+                await _mediator.Send(createPersonCommand, cancellationToken);
+            }
+            catch (ValidationException ex)
+            {
+                foreach (var error in ex.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+            }
 
-            return View(id);
+            return View(createPersonCommand);
         }
 
         [HttpGet]
-        public IActionResult Update(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update(int? id, CancellationToken cancellationToken)
         {
-            return View(GetPersonById(id, cancellationToken));
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            return View(await _mediator.Send(new GetPersonByIdQuery((int)id), cancellationToken));
         }
 
         [HttpPost]
-        public IActionResult Update([FromForm] Person person, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update(UpdatePersonCommand updatePersonCommand, CancellationToken cancellationToken)
         {
-            _mediator.Send(new UpdatePersonCommand(person.Id, person.FirstName, person.LastName, person.Age));
+            await _mediator.Send(updatePersonCommand, cancellationToken);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public IActionResult Delete(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Delete(int? id, CancellationToken cancellationToken)
         {
-            return View(GetPersonById(id, cancellationToken));
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            Person person = await _mediator.Send(new GetPersonByIdQuery((int)id), cancellationToken);
+
+            if (person == null)
+            {
+                return NotFound();
+            }
+
+            return View(person);
         }
 
         [HttpPost]
-        public IActionResult DeletePost(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Delete(DeletePersonCommand deletePersonCommand, CancellationToken cancellationToken)
         {
-            _mediator.Send(new DeletePersonCommand(id), cancellationToken);
+            await _mediator.Send(deletePersonCommand, cancellationToken);
 
             return RedirectToAction("Index");
-        }
-        
-
-        private Person GetPersonById(int id, CancellationToken cancellationToken)
-        {
-            return _mediator.Send(new GetPersonByIdQuery(id), cancellationToken).Result;
         }
     }
 }

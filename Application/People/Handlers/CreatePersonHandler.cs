@@ -1,12 +1,12 @@
 ﻿using Application.Interfaces;
-using Application.People.Commands;
+using Application.People.Commands.Create;
 using Domain;
 using MediatR;
 
 namespace Application.People.Handlers
 {
     public class CreatePersonHandler
-        : IRequestHandler<CreatePersonCommand, int>
+        : IRequestHandler<CreatePersonCommand, Person>
     {
         private readonly IPersonRepository _personRepository;
 
@@ -15,7 +15,7 @@ namespace Application.People.Handlers
             _personRepository = personRepository;
         }
 
-        public async Task<int> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
+        public async Task<Person> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
         {
             Person person = new Person()
             {
@@ -27,7 +27,7 @@ namespace Application.People.Handlers
             await _personRepository.Create(person);
             _personRepository.Save();
 
-            return person.Id;
+            return person;
         }
     }
 }

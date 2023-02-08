@@ -15,7 +15,7 @@
 <div>
     <form method="post">
         <div>
-            <input type="hidden" value="@Model.Id" name="Id" />
+            <input type="hidden" value="@Model.Id" asp-for="Id" />
         </div>
         <div>
             <p>First name:</p>
@@ -30,7 +30,7 @@
             <p>@Model.Age</p>
         </div>
         <div>
-            <input type="submit" value="Delete" asp-action="DeletePost" />
+            <input type="submit" value="Delete" asp-action="Delete" />
         </div>
     </form>
 </div>

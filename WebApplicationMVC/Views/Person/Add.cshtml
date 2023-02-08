@@ -1,35 +1,34 @@
-﻿@model Int32
+﻿@model Application.People.Commands.Create.CreatePersonCommand;
 
 @{
     ViewData["Title"] = "Add";
 }
 
 <div>
-    <form method="post">
+    <form asp-controller="Person" asp-action="Add" method="post">
         <div>
             <p>First name:</p>
-            <input name="FirstName" />
+            <input type="text" asp-for="FirstName" />
+            @Html.ValidationMessageFor(x => x.FirstName)
+            <br />
         </div>
         <div>
             <p>Last name:</p>
-            <input name="LastName" />
+            <input type="text" asp-for="LastName" />
+            @Html.ValidationMessageFor(x => x.LastName)
+            <br />
         </div>
         <div>
             <p>Age:</p>
-            <input type="number" name="Age" />
+            <input type="number" asp-for="Age" />
+            @Html.ValidationMessageFor(x => x.Age)
+            <br />
         </div>
         <div>
             <input type="submit" value="Send" />
-            <button asp-action="Index">
-                To list
+            <button>
+                <a asp-controller="Person" asp-action="Index">To list</a>
             </button>
         </div>
     </form>
-</div>
-
-<div>
-    @if (Model != 0)
-    {
-        <p>A new person has been added; Id: @Model</p>
-    }
 </div>

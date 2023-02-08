@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces;
-using Application.People.Commands;
+using Application.People.Commands.Update;
 using Domain;
 using MediatR;
 

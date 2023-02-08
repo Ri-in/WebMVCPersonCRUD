@@ -1,8 +1,6 @@
 using Application.Interfaces;
-using Application.People.Queries;
 using Infrastructure.Persistance;
 using Infrastructure.Persistance.Repositories;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +10,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
-builder.Services.AddMediatR(typeof(GetPersonListQuery).Assembly);
+builder.Services.AddApplicationServices();
 
 builder.Services.AddControllersWithViews();
 
