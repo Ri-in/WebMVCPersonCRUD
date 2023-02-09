@@ -11,28 +11,16 @@ namespace Application.People.Commands.Update
                 .NotEqual(0);
 
             RuleFor(p => p.FirstName)
-                .NotEmpty()
-                .MaximumLength(25)
-                .MinimumLength(2);
+                .NotEmpty().WithMessage("*First name is required!")
+                .Length(2, 25).WithMessage("*The length of the first name must be at least 2 and no more than 25 characters!");
 
             RuleFor(p => p.LastName)
-                .NotEmpty()
-                .MaximumLength(25)
-                .MinimumLength(2);
+                .NotEmpty().WithMessage("*First name is required!")
+                .Length(2, 25).WithMessage("*The length of the first name must be at least 2 and no more than 25 characters!");
 
-            RuleFor(p => p.Age)
-                .NotEmpty()
-                .Must(BeValidAge);
-        }
-
-        private bool BeValidAge(byte age)
-        {
-            if (age < 18 || age > 100)
-            {
-                return false;
-            }
-
-            return true;
+            RuleFor(p => (int)p.Age)
+                .NotEmpty().WithMessage("*Age is required!")
+                .InclusiveBetween(18, 100).WithMessage("*The age must be at least 18 and not more than 100 years!");
         }
     }
 }

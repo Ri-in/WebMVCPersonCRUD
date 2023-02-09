@@ -19,16 +19,18 @@
         </div>
         <div>
             <p>First name:</p>
-            <input value="@Model.FirstName" name="FirstName" />
+            <input value="@Model.FirstName" asp-for="FirstName" />
             <span asp-validation-for="FirstName"></span>
         </div>
         <div>
             <p>Last name:</p>
-            <input value="@Model.LastName" name="LastName" />
+            <input value="@Model.LastName" asp-for="LastName" />
+            <span asp-validation-for="LastName"></span>
         </div>
         <div>
             <p>Age:</p>
-            <input type="number" value="@Model.Age" name="Age" />
+            <input type="number" value="@Model.Age" asp-for="Age" />
+            <span asp-validation-for="Age"></span>
         </div>
         <div>
             <input type="submit" value="Save" />

@@ -1,17 +1,13 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using System.Text.Json;
+﻿using System.Text.Json;
 using WebApplicationMVC.Models;
 
 namespace WebApplicationMVC.Middlewares
 {
-    public class GlobalExceptionHandler
+    public class GlobalExceptionHandler : IMiddleware
     {
-        private readonly ILogger _logger;
-
-        public GlobalExceptionHandler(RequestDelegate next, ILogger logger)
+        public GlobalExceptionHandler()
         {
-            _logger = logger;
+
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
@@ -22,12 +18,8 @@ namespace WebApplicationMVC.Middlewares
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-
                 await HandleExceptionAsync(context, ex);
             }
-
-            
         }
 
 
@@ -36,14 +28,15 @@ namespace WebApplicationMVC.Middlewares
             var statusCode = GetStatusCode(ex);
 
             var response = context.Response;
-            
+
 
             response.ContentType = "application/json";
-            response.StatusCode = GetStatusCode(ex);
-            ErrorDetails errorDetails = new ErrorDetails()
+            response.StatusCode = statusCode;
+
+            ErrorDetails errorDetails = new()
             {
                 Message = ex.Message,
-                StatusCode = response.StatusCode
+                StatusCode = statusCode
             };
 
             string result = JsonSerializer.Serialize(errorDetails);
@@ -55,21 +48,9 @@ namespace WebApplicationMVC.Middlewares
         {
             return ex switch
             {
-                ValidationException => StatusCodes.Status422UnprocessableEntity,
+                Exception => StatusCodes.Status500InternalServerError,
                 _ => StatusCodes.Status500InternalServerError
             };
-        }
-
-        private static IEnumerable<ValidationFailure> GetErrors(Exception ex)
-        {
-            IEnumerable<ValidationFailure> errors = null;
-
-            if (ex is ValidationException validationException)
-            {
-                errors = validationException.Errors;
-            }
-
-            return errors;
         }
     }
 }

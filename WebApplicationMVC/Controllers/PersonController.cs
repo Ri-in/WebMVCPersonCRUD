@@ -13,7 +13,6 @@ namespace WebApplicationMVC.Controllers
     {
         private readonly IMediator _mediator;
 
-
         public PersonController(IMediator mediator)
         {
             _mediator = mediator;
@@ -40,7 +39,7 @@ namespace WebApplicationMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync(CreatePersonCommand createPersonCommand, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddAsync([Bind]CreatePersonCommand createPersonCommand, CancellationToken cancellationToken)
         {
             try
             {
@@ -48,10 +47,7 @@ namespace WebApplicationMVC.Controllers
             }
             catch (ValidationException ex)
             {
-                foreach (var error in ex.Errors)
-                {
-                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                }
+                SetModelState(ex);
             }
 
             return View(createPersonCommand);
@@ -71,7 +67,26 @@ namespace WebApplicationMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdatePersonCommand updatePersonCommand, CancellationToken cancellationToken)
         {
-            await _mediator.Send(updatePersonCommand, cancellationToken);
+            try
+            {
+                await _mediator.Send(updatePersonCommand, cancellationToken);
+            }
+            catch (ValidationException ex)
+            {
+                SetModelState(ex);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var person = new Person()
+                {
+                    Id = updatePersonCommand.Id,
+                    FirstName = updatePersonCommand.FirstName,
+                    LastName = updatePersonCommand.LastName
+                };
+
+                return View(person);   
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -100,6 +115,15 @@ namespace WebApplicationMVC.Controllers
             await _mediator.Send(deletePersonCommand, cancellationToken);
 
             return RedirectToAction("Index");
+        }
+
+
+        private void SetModelState(ValidationException exception)
+        {
+            foreach (var er in exception.Errors)
+            {
+                ModelState.AddModelError(er.PropertyName, er.ErrorMessage);
+            }
         }
     }
 }

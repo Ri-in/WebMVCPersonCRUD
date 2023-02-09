@@ -1,20 +1,18 @@
-using Application.Interfaces;
-using Infrastructure.Persistance;
-using Infrastructure.Persistance.Repositories;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure;
+using WebApplicationMVC.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddScoped<IPersonRepository, PersonRepository>();
-
+builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddApplicationServices();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddTransient<GlobalExceptionHandler>();
+
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionHandler>();
 
 app.MapControllerRoute(
     name: "default",

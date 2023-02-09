@@ -6,22 +6,23 @@
 
 <div>
     <form asp-controller="Person" asp-action="Add" method="post">
+        <div asp-validation-summary="ModelOnly"></div>
         <div>
             <p>First name:</p>
             <input type="text" asp-for="FirstName" />
-            @Html.ValidationMessageFor(x => x.FirstName)
+            <span asp-validation-for="FirstName"></span>
             <br />
         </div>
         <div>
             <p>Last name:</p>
             <input type="text" asp-for="LastName" />
-            @Html.ValidationMessageFor(x => x.LastName)
+            <span asp-validation-for="LastName"></span>
             <br />
         </div>
         <div>
             <p>Age:</p>
             <input type="number" asp-for="Age" />
-            @Html.ValidationMessageFor(x => x.Age)
+            <span asp-validation-for="Age"></span>
             <br />
         </div>
         <div>

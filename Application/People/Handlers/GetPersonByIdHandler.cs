@@ -1,12 +1,6 @@
-﻿using Application.Interfaces;
-using Application.People.Queries;
+﻿using Application.People.Queries;
 using Domain;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.People.Handlers
 {
@@ -24,7 +18,7 @@ namespace Application.People.Handlers
         {
             List<Person> people = await _mediator.Send(new GetPersonListQuery(), cancellationToken);
 
-            Person person = people.FirstOrDefault(p => p.Id == request.Id);
+            Person person = people.FirstOrDefault(p => p.Id == request.Id)!;
             return person;
         }
     }
